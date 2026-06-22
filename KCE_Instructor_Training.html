@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KingCretot Experience — Instructor Onboarding &amp; Compliance Training</title>
+<!--
+  ============================================================================
+  KCE INSTRUCTOR ONBOARDING & COMPLIANCE TRAINING  ·  v1.0
+  ----------------------------------------------------------------------------
+  DEPLOY:  Host this single file on GitHub Pages (same as placement.kingcretot.com).
+           Suggested: training.kingcretot.com
+  WIRE-UP: 1) Create a NEW Formspree form named "KCE Instructor Training".
+              (Do NOT reuse the placement form meewlapo — it misroutes.)
+           2) Paste its form ID into FORMSPREE_ENDPOINT below.
+           3) In Formspree, set the email recipient to kce@kingcretot.com.
+  RESULT:  On completion the full signed record emails to kce@ for the
+           employee file, and the trainee can download a completion certificate.
+  NOTE:    Progress auto-saves in the browser (localStorage). Self-paced.
+           Must be completed once at onboarding and again upon rehire.
+  LEGAL:   Acknowledgment language is a strong template. Have Janie (CPA) and
+           KCE's attorney review before first use, especially classification.
+  ============================================================================
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Lato:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0A1F3D; --gold:#C9A84C; --blue:#0047BA; --red:#DB2F30;
+    --cream:#FAF7EF; --ink:#17243B; --muted:#5b6678; --line:#e7e0cf;
+    --ok:#1c7a4d; --okbg:#e8f4ee; --warn:#9a6a00;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{background:var(--cream);color:var(--ink);font-family:'Lato',-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.6;font-size:16px}
+  h1,h2,h3,h4{font-family:'Playfair Display',Georgia,serif;color:var(--navy);line-height:1.2;margin:0 0 .5em}
+  a{color:var(--blue)}
+  .wrap{max-width:880px;margin:0 auto;padding:0 18px 80px}
+
+  /* ---- Masthead ---- */
+  .masthead{background:var(--navy);color:#fff;padding:22px 0 18px;border-bottom:3px solid var(--gold)}
+  .masthead .inner{max-width:880px;margin:0 auto;padding:0 18px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .monogram{width:46px;height:46px;border:2px solid var(--gold);border-radius:4px;display:flex;align-items:center;justify-content:center;position:relative;flex:0 0 auto}
+  .monogram:after{content:"";position:absolute;inset:4px;border:1px solid var(--gold);border-radius:2px}
+  .monogram span{font-family:'Playfair Display',serif;color:var(--gold);font-weight:700;font-size:18px;letter-spacing:1px;z-index:1}
+  .wordmark{font-family:'Playfair Display',serif;color:var(--gold);font-size:22px;font-weight:700;letter-spacing:.3px}
+  .tagline{font-size:11px;letter-spacing:2px;text-transform:uppercase;margin-top:2px}
+  .tagline b{font-weight:700}
+  .tagline .e1{color:var(--blue)} .tagline .e2{color:var(--gold)} .tagline .e3{color:var(--red)}
+  .masthead .docname{margin-left:auto;text-align:right;font-size:12px;color:#cdd6e6;opacity:.9}
+  @media(max-width:560px){.masthead .docname{display:none}}
+
+  /* ---- Progress ---- */
+  .progressbar{position:sticky;top:0;z-index:20;background:var(--cream);border-bottom:1px solid var(--line);padding:10px 0}
+  .progressbar .inner{max-width:880px;margin:0 auto;padding:0 18px;display:flex;align-items:center;gap:12px}
+  .ptrack{flex:1;height:8px;background:#eadfc7;border-radius:99px;overflow:hidden}
+  .pfill{height:100%;width:0%;background:linear-gradient(90deg,var(--gold),#e3c976);transition:width .35s ease}
+  .pmeta{font-size:12px;color:var(--muted);white-space:nowrap;font-weight:700}
+
+  /* ---- Card / steps ---- */
+  .card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:30px 30px 26px;margin-top:22px;box-shadow:0 1px 0 rgba(10,31,61,.04)}
+  @media(max-width:560px){.card{padding:22px 18px}}
+  .kicker{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:6px}
+  .card h2{font-size:27px;border-bottom:2px solid var(--gold);padding-bottom:.35em;margin-bottom:.6em}
+  .lead{font-size:18px;color:#2a334a}
+  p{margin:0 0 1em}
+  ul,ol{margin:0 0 1em;padding-left:1.25em}
+  li{margin:.3em 0}
+  .pill{display:inline-block;background:#f3ecda;color:#7a652a;border:1px solid var(--line);border-radius:99px;padding:2px 11px;font-size:12px;font-weight:700;letter-spacing:.4px}
+  .callout{border-left:4px solid var(--gold);background:#fbf7ec;padding:14px 16px;border-radius:0 8px 8px 0;margin:1em 0}
+  .callout.red{border-left-color:var(--red);background:#fdf0f0}
+  .callout.blue{border-left-color:var(--blue);background:#eef3fc}
+  .callout h4{margin:.1em 0 .35em;font-size:16px}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:560px){.two{grid-template-columns:1fr}}
+  .mini{border:1px solid var(--line);border-radius:8px;padding:14px 16px;background:#fcfbf6}
+  .mini h4{font-size:15px;margin:0 0 .3em;color:var(--navy)}
+  .mini p{font-size:14px;color:var(--muted);margin:0}
+  .tool{display:flex;gap:12px;align-items:flex-start;border:1px solid var(--line);border-radius:8px;padding:12px 14px;margin:.55em 0;background:#fcfbf6}
+  .tool .ic{flex:0 0 38px;height:38px;border-radius:7px;background:var(--navy);color:var(--gold);display:flex;align-items:center;justify-content:center;font-weight:700;font-family:'Playfair Display',serif;font-size:14px}
+  .tool b{color:var(--navy)} .tool .d{font-size:14px;color:var(--muted)}
+  hr.soft{border:none;border-top:1px solid var(--line);margin:1.4em 0}
+
+  /* ---- Forms ---- */
+  label.fl{display:block;font-weight:700;color:var(--navy);font-size:14px;margin:14px 0 5px}
+  input[type=text],input[type=email],input[type=date],select,textarea{
+    width:100%;padding:11px 13px;border:1px solid #cfc6b0;border-radius:7px;font-size:15px;font-family:inherit;background:#fff;color:var(--ink)}
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,76,.18)}
+  .req{color:var(--red)}
+  .hint{font-size:12.5px;color:var(--muted);margin-top:4px}
+
+  /* knowledge check */
+  .kc{border:1px solid var(--line);border-radius:9px;padding:16px 18px;margin-top:18px;background:#fcfbf6}
+  .kc .q{font-weight:700;color:var(--navy);margin-bottom:8px}
+  .opt{display:block;border:1px solid #d9d0ba;border-radius:7px;padding:10px 12px;margin:7px 0;cursor:pointer;background:#fff;font-size:15px;transition:.12s}
+  .opt:hover{border-color:var(--gold)}
+  .opt input{margin-right:9px}
+  .opt.correct{border-color:var(--ok);background:var(--okbg)}
+  .opt.wrong{border-color:var(--red);background:#fdeeee}
+  .kcfb{margin-top:10px;font-size:14px;font-weight:700;display:none}
+  .kcfb.show{display:block}
+  .kcfb.good{color:var(--ok)} .kcfb.bad{color:var(--red)}
+
+  /* initial / sign */
+  .ack{border:1px solid var(--line);border-radius:9px;padding:18px 20px;margin:16px 0;background:#fff}
+  .ack h3{font-size:18px;margin:0 0 .4em}
+  .ack .body{font-size:14.5px;color:#33415c}
+  .initrow{display:flex;gap:12px;align-items:center;margin-top:12px;flex-wrap:wrap}
+  .initrow label{font-weight:700;color:var(--navy);font-size:14px}
+  .initrow input{width:120px;text-transform:uppercase;letter-spacing:2px;text-align:center;font-weight:700}
+  .initdone{color:var(--ok);font-weight:700;font-size:13px;display:none}
+  .initdone.show{display:inline}
+
+  /* buttons / nav */
+  .nav{display:flex;justify-content:space-between;gap:12px;margin-top:26px}
+  button{font-family:inherit;cursor:pointer;border:none;border-radius:8px;font-weight:700;font-size:15px;padding:12px 22px;transition:.15s}
+  .btn{background:var(--navy);color:#fff}
+  .btn:hover{background:#0d2a52}
+  .btn:disabled{background:#c9cdd6;cursor:not-allowed;color:#fff}
+  .btn.gold{background:var(--gold);color:var(--navy)}
+  .btn.gold:hover{background:#d8ba5e}
+  .btn.ghost{background:#fff;color:var(--navy);border:1px solid #cfc6b0}
+  .btn.ghost:hover{border-color:var(--gold)}
+  .small{font-size:13px;padding:9px 14px}
+
+  /* contacts */
+  .contact{display:flex;gap:14px;align-items:flex-start;border:1px solid var(--line);border-radius:9px;padding:16px;margin:.6em 0;background:#fcfbf6}
+  .contact .av{flex:0 0 48px;height:48px;border-radius:50%;background:var(--navy);color:var(--gold);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:700}
+  .contact b{color:var(--navy)} .contact .role{color:var(--gold);font-weight:700;font-size:13px} .contact .meta{font-size:14px;color:var(--muted)}
+
+  /* footer */
+  .foot{max-width:880px;margin:30px auto 0;padding:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted);text-align:center}
+  .triband{height:5px;border-radius:99px;background:linear-gradient(90deg,var(--blue) 0 33.3%,var(--gold) 33.3% 66.6%,var(--red) 66.6% 100%);max-width:240px;margin:0 auto 12px}
+
+  .hidden{display:none!important}
+  .checkline{display:flex;gap:10px;align-items:flex-start;margin:12px 0;font-size:14.5px}
+  .checkline input{margin-top:3px;flex:0 0 auto;width:18px;height:18px}
+  .reviewlist li{margin:.4em 0}
+  .done-ic{font-size:46px;color:var(--gold);text-align:center;margin:6px 0}
+  .cert{border:2px solid var(--gold);border-radius:10px;padding:22px;background:#fffdf6;margin-top:18px}
+  .cert .row{display:flex;justify-content:space-between;border-bottom:1px dashed var(--line);padding:7px 0;font-size:14px}
+  .cert .row span:first-child{color:var(--muted)} .cert .row span:last-child{font-weight:700;color:var(--navy);text-align:right}
+  .savetag{font-size:12px;color:var(--ok);font-weight:700;opacity:0;transition:opacity .3s}
+  .savetag.show{opacity:1}
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div class="inner">
+    <div class="monogram"><span>KC</span></div>
+    <div>
+      <div class="wordmark">KingCretot Experience</div>
+      <div class="tagline"><b class="e1">Educate</b> · <b class="e2">Empower</b> · <b class="e3">Excel</b></div>
+    </div>
+    <div class="docname">Instructor Onboarding<br>&amp; Compliance Training · v1.0</div>
+  </div>
+</div>
+
+<div class="progressbar">
+  <div class="inner">
+    <div class="ptrack"><div class="pfill" id="pfill"></div></div>
+    <div class="pmeta" id="pmeta">Step 1 of 12</div>
+    <div class="savetag" id="savetag">Saved ✓</div>
+  </div>
+</div>
+
+<div class="wrap">
+
+<!-- ================= STEP 0 · WELCOME ================= -->
+<section class="card step" data-step="0">
+  <div class="kicker">Welcome to the Team</div>
+  <h2>Your KCE Onboarding &amp; Compliance Training</h2>
+  <p class="lead">Welcome to KingCretot Experience. Before you meet your first student, this short program grounds you in who we are, how we teach, and the standards that protect our students, our families, and you.</p>
+  <p>This training is <b>self-paced</b> and takes about <b>45–60 minutes</b>. Your progress saves automatically in this browser, so you can stop and pick up where you left off. You'll complete it <b>once when you join</b> and <b>again if you're ever re-engaged</b> after a break.</p>
+
+  <div class="callout">
+    <h4>What you'll cover</h4>
+    <ol style="margin-bottom:0">
+      <li>Our mission, vision &amp; the KCE Way</li>
+      <li>Pedagogy &amp; teaching standards</li>
+      <li>Professional expectations &amp; code of conduct</li>
+      <li>Child safety &amp; working with minors</li>
+      <li>Anti-harassment &amp; anti-discrimination</li>
+      <li>Online &amp; in-person teaching etiquette</li>
+      <li>Your tools &amp; platforms</li>
+      <li>Who to contact &amp; how to escalate</li>
+      <li>Acknowledgments &amp; signature</li>
+    </ol>
+  </div>
+
+  <hr class="soft">
+  <h3 style="font-size:18px">Before you begin</h3>
+  <p class="hint" style="margin-bottom:0">Tell us who you are. This appears on your completion record, which is filed in your personnel record with KCE.</p>
+
+  <label class="fl">Full legal name <span class="req">*</span></label>
+  <input type="text" id="t_name" placeholder="First and last name" autocomplete="name">
+
+  <label class="fl">Email <span class="req">*</span></label>
+  <input type="email" id="t_email" placeholder="Your KCE email if issued, otherwise your personal email" autocomplete="email">
+
+  <label class="fl">Your engagement type <span class="req">*</span></label>
+  <select id="t_role">
+    <option value="">Select…</option>
+    <option value="1099">Independent Contractor (1099)</option>
+    <option value="w2">Employee (W-2)</option>
+  </select>
+  <div class="hint">Not sure? Most KCE instructors are <b>1099 independent contractors</b>. If you're unsure, choose that and confirm with Jonathan.</div>
+
+  <label class="fl">Primary program(s) you'll teach</label>
+  <select id="t_program">
+    <option value="">Select…</option>
+    <option>French</option>
+    <option>English (language instruction)</option>
+    <option>K-12 Academic Tutoring</option>
+    <option>Test Prep</option>
+    <option>Homeschool Teaching &amp; Enrichment / Tutoring</option>
+    <option>Multiple programs</option>
+  </select>
+
+  <div class="nav"><span></span><button class="btn" id="start">Begin training →</button></div>
+</section>
+
+<!-- ================= STEP 1 · MISSION / VISION / KCE WAY ================= -->
+<section class="card step hidden" data-step="1">
+  <div class="kicker">Module 1</div>
+  <h2>Mission, Vision &amp; the KCE Way</h2>
+  <p class="lead">Everything we do flows from one belief.</p>
+
+  <div class="callout">
+    <h4>Our mission</h4>
+    <p style="margin:0">Quality education is a right, not a privilege — every learner deserves dedicated, boutique instruction, no matter the cost.</p>
+  </div>
+  <div class="callout blue">
+    <h4>Our vision</h4>
+    <p style="margin:0">To be the boutique school families <i>choose</i> — online and in person — where one teacher truly knows the child, and where scholarship and cash-pay families alike receive the same exceptional standard. We <b>Educate, Empower,</b> and help every student <b>Excel.</b></p>
+  </div>
+
+  <h3 style="font-size:19px;margin-top:1.2em">The KCE Way — what makes us different</h3>
+  <p>We are <b>not</b> traditional tutoring, and we are not a gig marketplace shuffling a rotating pool of tutors. We are <b>empathy-led, customized education</b>. Think of it as tutoring with <b>flavor, dedication, and consistent commitment</b>.</p>
+
+  <div class="two">
+    <div class="mini"><h4>Empathy-led</h4><p>We meet the learner where they are — emotionally and academically. Relationship first, results follow.</p></div>
+    <div class="mini"><h4>Customized</h4><p>Every plan is built around one student's goals, pace, and learning profile. Never one-size-fits-all.</p></div>
+    <div class="mini"><h4>Dedicated</h4><p>The same instructor, prepared every time, who follows through and remembers what matters to the student.</p></div>
+    <div class="mini"><h4>Consistent</h4><p>Boutique means reliable excellence — high warmth and high expectations, lesson after lesson.</p></div>
+  </div>
+
+  <div class="callout">
+    <p style="margin:0">A note on language: at KCE we deliver <b>lessons</b>, not "sessions." Small words signal the standard.</p>
+  </div>
+
+  <div class="kc" data-kc="1" data-correct="b">
+    <div class="q">Knowledge check — Which statement best describes the KCE Way?</div>
+    <label class="opt"><input type="radio" name="kc1" value="a">We match students with whichever tutor is available that day.</label>
+    <label class="opt"><input type="radio" name="kc1" value="b">Empathy-led, customized education with a dedicated instructor who consistently commits to the student.</label>
+    <label class="opt"><input type="radio" name="kc1" value="c">Standardized worksheets delivered the same way to every student.</label>
+    <div class="kcfb"></div>
+  </div>
+
+  <div class="nav"><button class="btn ghost prev">← Back</button><button class="btn next" disabled>Continue →</button></div>
+</section>
+
+<!-- ================= STEP 2 · PEDAGOGY ================= -->
+<section class="card step hidden" data-step="2">
+  <div class="kicker">Module 2</div>
+  <h2>Pedagogy &amp; Teaching Standards</h2>
+  <p class="lead">How a KCE lesson is taught — every time.</p>
+
+  <h3 style="font-size:18px">Build the relationship first</h3>
+  <p>Students learn from people they trust. Open with warmth, learn their interests, and connect material to what they care about. A nervous or disengaged student cannot absorb content — your first job is to make the lesson feel safe and personal.</p>
+
+  <h3 style="font-size:18px">Teach to the individual</h3>
+  <p>Before you teach, know the goal: a grade, a test score, conversational fluency, confidence. Diagnose where the student actually is, then differentiate — adjust pace, examples, and modality (visual, verbal, hands-on) to <i>this</i> learner. Re-teach without judgment when something doesn't land.</p>
+
+  <div class="callout">
+    <h4>The KCE lesson arc</h4>
+    <ol style="margin:0">
+      <li><b>Warm-up &amp; connect</b> — greet, check in, set today's goal.</li>
+      <li><b>Teach</b> — clear, scaffolded instruction in small steps.</li>
+      <li><b>Practice</b> — student does the work; you coach.</li>
+      <li><b>Check for understanding</b> — confirm mastery before moving on.</li>
+      <li><b>Wrap &amp; next steps</b> — recap wins, assign light follow-up, preview next lesson.</li>
+    </ol>
+  </div>
+
+  <h3 style="font-size:18px">Inclusive instruction &amp; accommodations</h3>
+  <p>Many KCE students learn differently — including students on Florida's FES-UA (unique-abilities) scholarship, and learners with IEPs, 504 plans, ADHD, dyslexia, anxiety, or autism. Inclusive teaching is core to who we are, not an add-on.</p>
+  <ul>
+    <li><b>Ask and adapt.</b> Ask families about accommodations that help — extended time, chunked tasks, frequent breaks, visual supports, reduced-distraction pacing — and build them into the lesson.</li>
+    <li><b>Strengths-first.</b> Presume competence, lead with what the student does well, and never talk down to a learner because of a diagnosis.</li>
+    <li><b>Patience over pace.</b> Progress for some students is measured in confidence and small wins. Honor that — it is exactly the boutique standard.</li>
+    <li><b>Stay in your lane.</b> You are not diagnosing or providing therapy. If a student needs support beyond instruction, flag it to KCE rather than improvising.</li>
+  </ul>
+
+  <h3 style="font-size:18px">Consistency &amp; communication</h3>
+  <p>Come prepared with materials ready and tech tested. Track each student's progress and share brief, encouraging updates with families. Consistency — same instructor, same standard, reliable follow-through — is the heart of the boutique promise.</p>
+
+  <div class="kc" data-kc="2" data-correct="c">
+    <div class="q">Knowledge check — A student isn't grasping a concept after two explanations. The KCE approach is to…</div>
+    <label class="opt"><input type="radio" name="kc2" value="a">Move on to stay on schedule and hope it clicks later.</label>
+    <label class="opt"><input type="radio" name="kc2" value="b">Tell them to study harder before the next lesson.</label>
+    <label class="opt"><input type="radio" name="kc2" value="c">Re-teach a different way — new modality or examples — and check for understanding before moving on.</label>
+    <div class="kcfb"></div>
+  </div>
+
+  <div class="nav"><button class="btn ghost prev">← Back</button><button class="btn next" disabled>Continue →</button></div>
+</section>
+
+<!-- ================= STEP 3 · EXPECTATIONS / CONDUCT ================= -->
+<section class="card step hidden" data-step="3">
+  <div class="kicker">Module 3</div>
+  <h2>Professional Expectations &amp; Code of Conduct</h2>
+  <p class="lead">The standards every KCE instructor upholds.</p>
+
+  <div class="two">
+    <div class="mini"><h4>Reliability</h4><p>Be early. Never no-show. If an emergency arises, notify KCE and the family as far ahead as possible.</p></div>
+    <div class="mini"><h4>Preparation</h4><p>Materials ready, platform tested, and a plan for each lesson before it starts.</p></div>
+    <div class="mini"><h4>Responsiveness</h4><p>Reply to KCE and family messages promptly — within one business day — through KCE channels.</p></div>
+    <div class="mini"><h4>Professionalism</h4><p>Courteous, encouraging, and brand-appropriate in tone, appearance, and conduct at all times.</p></div>
+  </div>
+
+  <h3 style="font-size:18px;margin-top:1.1em">Scholarship integrity</h3>
+  <p>Many KCE families are funded through Florida's Step Up for Students scholarships (PEP, FES-EO, FES-UA). Keep accurate attendance and lesson records, deliver every lesson honestly, and never misrepresent hours or services. Scholarship fraud is a serious matter that can end the engagement and trigger legal exposure — for the instructor and for KCE.</p>
+
+  <div class="callout blue">
+    <h4>Confidentiality &amp; student privacy</h4>
+    <p style="margin:0">Student information — names, grades, records, family details — is confidential. Use it only to teach, store it only in KCE-approved tools, and never share it outside KCE. We align our handling of student records with student-privacy standards (FERPA principles). You'll formally acknowledge this later.</p>
+  </div>
+
+  <div class="kc" data-kc="3" data-correct="a">
+    <div class="q">Knowledge check — A parent asks you to "round up" a few lessons that didn't happen so their scholarship covers more. You…</div>
+    <label class="opt"><input type="radio" name="kc3" value="a">Decline, explain KCE only bills for lessons actually delivered, and notify KCE leadership.</label>
+    <label class="opt"><input type="radio" name="kc3" value="b">Do it once as a favor since they're a nice family.</label>
+    <label class="opt"><input type="radio" name="kc3" value="c">Ignore it and bill normally without telling anyone.</label>
+    <div class="kcfb"></div>
+  </div>
+
+  <div class="nav"><button class="btn ghost prev">← Back</button><button class="btn next" disabled>Continue →</button></div>
+</section>
+
+<!-- ================= STEP 4 · CHILD SAFETY ================= -->
+<section class="card step hidden" data-step="4">
+  <div class="kicker">Module 4 · Mandatory</div>
+  <h2>Child Safety &amp; Working with Minors</h2>
+  <p class="lead">Most KCE students are under 18. Protecting them is non-negotiable and comes before everything else.</p>
+
+  <div class="callout red">
+    <h4>Background check (Checkr) is required</h4>
+    <p style="margin:0">Anyone who interacts with students under 18 must clear a <b>Checkr background check</b> before their first lesson. This protects students and is a condition of working with minors at KCE. You'll complete it through a secure link KCE sends you.</p>
+  </div>
+
+  <h3 style="font-size:18px">Transparency &amp; approved channels only</h3>
+  <ul>
+    <li><b>Stay in KCE channels.</b> All contact with a minor happens through KCE-approved platforms (KCE email, Zoom, scheduled lessons). <b>Never</b> contact a student through personal phone, texts, personal email, social media, or direct messages.</li>
+    <li><b>Keep parents/guardians informed.</b> Families should always be able to see how, when, and where their child is being taught. No secrets with a child, ever.</li>
+    <li><b>In-person lessons</b> happen only in approved, appropriate settings with the parent/guardian's knowledge and consent — never in a private, isolated setting.</li>
+    <li><b>Boundaries.</b> No gifts, no private social connections, no romantic or sexualized content of any kind. Maintain a warm but clearly professional relationship.</li>
+  </ul>
+
+  <div class="callout red">
+    <h4>Mandatory reporting</h4>
+    <p style="margin:0">If you ever suspect a child is being abused, neglected, or is in danger, you are required to act. Report to the <b>Florida Abuse Hotline at 1-800-962-2873 (1-800-96-ABUSE)</b> and notify KCE leadership immediately. When a child's safety is in question, reporting is never optional.</p>
+  </div>
+
+  <div class="callout">
+    <h4>If a student discloses harm or is in crisis during a lesson</h4>
+    <p style="margin:.2em 0 .4em">If a student tells you they're being hurt, or is in distress or danger in the moment:</p>
+    <ul style="margin:0">
+      <li><b>Stay calm and listen.</b> Take it seriously; don't react with alarm or judgment.</li>
+      <li><b>Don't promise secrecy.</b> Never say "I won't tell anyone." Gently explain that to keep them safe you may need to tell someone who can help.</li>
+      <li><b>Don't investigate or interrogate.</b> Don't press for details, lead the child, or try to confirm it yourself — that's the professionals' role.</li>
+      <li><b>Ensure immediate safety</b>, then report to the Florida Abuse Hotline and notify KCE leadership the <b>same day</b>. If a child is in immediate danger, call 911.</li>
+      <li><b>Write down what was said</b> in the child's words as soon as possible, and share it only with KCE leadership and authorities.</li>
+    </ul>
+  </div>
+
+  <p class="hint">You will formally initial the Child Safety &amp; Mandatory Reporting acknowledgment in the Acknowledgments step.</p>
+
+  <div class="kc" data-kc="4" data-correct="b">
+    <div class="q">Knowledge check — A 14-year-old student asks to text you on your personal phone "so it's easier." You…</div>
+    <label class="opt"><input type="radio" name="kc4" value="a">Share your number — it's more convenient for the student.</label>
+    <label class="opt"><input type="radio" name="kc4" value="b">Decline kindly and keep all contact in KCE-approved channels with the parent informed.</label>
+    <label class="opt"><input type="radio" name="kc4" value="c">Text only occasionally and don't mention it to the parents.</label>
+    <div class="kcfb"></div>
+  </div>
+
+  <div class="nav"><button class="btn ghost prev">← Back</button><button class="btn next" disabled>Continue →</button></div>
+</section>
+
+<!-- ================= STEP 5 · ANTI-HARASSMENT ================= -->
+<section class="card step hidden" data-step="5">
+  <div class="kicker">Module 5 · Mandatory</div>
+  <h2>Anti-Harassment &amp; Anti-Discrimination</h2>
+  <p class="lead">KCE maintains a zero-tolerance policy. Everyone — students, families, and colleagues — is treated with dignity and respect.</p>
+
+  <h3 style="font-size:18px">Equal opportunity</h3>
+  <p>KCE does not tolerate discrimination or harassment based on race, color, religion, sex, sexual orientation, gender identity, national origin, age, disability, or any other characteristic protected by law. This applies to every interaction you have while representing KCE.</p>
+
+  <h3 style="font-size:18px">What sexual harassment is</h3>
+  <p>Sexual harassment includes unwelcome sexual advances, requests for sexual favors, and other verbal, visual, or physical conduct of a sexual nature. It takes two common forms:</p>
+  <ul>
+    <li><b>Quid pro quo</b> — making any benefit (a referral, a schedule, a grade, continued lessons) conditional on submitting to sexual conduct.</li>
+    <li><b>Hostile environment</b> — comments, images, jokes, messages, or behavior of a sexual nature that are unwelcome or intimidating.</li>
+  </ul>
+  <p>Prohibited conduct includes sexual comments or "jokes," unwanted advances or messages, sharing sexual content, and any sexualized behavior toward a student, family member, or colleague. <b>Any sexualized conduct involving a minor is absolutely prohibited and will be reported.</b></p>
+
+  <div class="callout">
+    <h4>How to report — and our promise</h4>
+    <p style="margin:0">If you experience or witness harassment or discrimination, report it immediately to <b>Jonathan King-Cretot (kce@kingcretot.com · 914-809-0112)</b>. If the concern involves Jonathan, report to <b>Fabrice King-Cretot (fabrice@kingcretot.com)</b>. KCE investigates every report and <b>strictly prohibits retaliation</b> against anyone who reports in good faith.</p>
+  </div>
+
+  <p class="hint">You will formally initial the Anti-Harassment acknowledgment in the Acknowledgments step.</p>
+
+  <div class="kc" data-kc="5" data-correct="c">
+    <div class="q">Knowledge check — KCE's anti-retaliation rule means…</div>
+    <label class="opt"><input type="radio" name="kc5" value="a">You should only report harassment if you're completely certain.</label>
+    <label class="opt"><input type="radio" name="kc5" value="b">Reports are discouraged to avoid conflict.</label>
+    <label class="opt"><input type="radio" name="kc5" value="c">No one may be punished for reporting harassment or discrimination in good faith.</label>
+    <div class="kcfb"></div>
+  </div>
+
+  <div class="nav"><button class="btn ghost prev">← Back</button><button class="btn next" disabled>Continue →</button></div>
+</section>
+
+<!-- ================= STEP 6 · ETIQUETTE ================= -->
+<section class="card step hidden" data-step="6">
+  <div class="kicker">Module 6</div>
+  <h2>Online &amp; In-Person Teaching Etiquette</h2>
+  <p class="lead">The boutique standard shows up in the details — how you present and how you run the room.</p>
+
+  <h3 style="font-size:18px">Teaching online (Zoom)</h3>
+  <ul>
+    <li><b>Join early</b> — be in the room a few minutes before the student.</li>
+    <li><b>Camera on</b>, framed at eye level, with good lighting and a tidy, neutral, professional background.</li>
+    <li><b>Quiet space &amp; clear audio</b> — use a headset if needed; no background noise or interruptions.</li>
+    <li><b>Engage</b> — use screen share, a virtual whiteboard, and interactive prompts; don't lecture at the camera.</li>
+    <li><b>Recording</b> follows KCE policy and requires parent/guardian consent — never record a minor without it.</li>
+    <li><b>Dress</b> and conduct yourself as you would in a family's home. End on time and recap next steps.</li>
+  </ul>
+
+  <h3 style="font-size:18px">Teaching in person</h3>
+  <ul>
+    <li>Meet only in <b>approved, appropriate, non-isolated</b> settings with parent/guardian knowledge and consent.</li>
+    <li>Arrive early, dressed professionally, with materials prepared.</li>
+    <li>Maintain clear professional boundaries and prioritize the student's safety and comfort at all times.</li>
+  </ul>
+
+  <div class="callout blue">
+    <h4>Always have a backup plan</h4>
+    <p style="margin:0">Tech fails. Know how to rejoin a dropped call, have the family's KCE-channel contact handy, and notify KCE if a lesson can't proceed. Calm, prepared problem-solving is part of the boutique experience.</p>
+  </div>
+
+  <div class="kc" data-kc="6" data-correct="a">
+    <div class="q">Knowledge check — Best practice for a KCE online lesson is to…</div>
+    <label class="opt"><input type="radio" name="kc6" value="a">Join early, camera on, professional background, and actively engage the student.</label>
+    <label class="opt"><input type="radio" name="kc6" value="b">Keep your camera off to avoid distractions.</label>
+    <label class="opt"><input type="radio" name="kc6" value="c">Record every lesson automatically without asking anyone.</label>
+    <div class="kcfb"></div>
+  </div>
+
+  <div class="nav"><button class="btn ghost prev">← Back</button><button class="btn next" disabled>Continue →</button></div>
+</section>
+
+<!-- ================= STEP 7 · TOOLS ================= -->
+<section class="card step hidden" data-step="7">
+  <div class="kicker">Module 7</div>
+  <h2>Your Tools &amp; Platforms</h2>
+  <p class="lead">KCE runs on a small, professional toolset. Here's what you'll use and why.</p>
+
+  <div class="tool"><div class="ic">@</div><div><b>Gmail (KCE email)</b><div class="d">Your professional inbox for all KCE and family communication. If issued a KCE address, use it — never your personal email. Keep replies prompt, warm, and professional, and use your KCE signature.</div></div></div>
+  <div class="tool"><div class="ic">Dr</div><div><b>Google Docs &amp; Drive</b><div class="d">Where lesson materials and shared resources live. Store student-related work only in KCE-approved Drive locations; never copy student data to personal storage.</div></div></div>
+  <div class="tool"><div class="ic">Ch</div><div><b>Real-time chat (Google Chat)</b><div class="d">Quick coordination with the KCE team. Use it for fast operational questions — keep it professional; it's a work channel.</div></div></div>
+  <div class="tool"><div class="ic">Cal</div><div><b>Calendly</b><div class="d">How lessons and consultations are booked. Keep your availability accurate, honor every booking, and don't book families outside the KCE flow.</div></div></div>
+  <div class="tool"><div class="ic">Zm</div><div><b>Zoom</b><div class="d">Your live classroom for online delivery. Use the KCE-provided meeting link, follow the online etiquette standards, and respect the recording policy.</div></div></div>
+  <div class="tool"><div class="ic">Chk</div><div><b>Checkr</b><div class="d">Our background-check provider. Required clearance before working with students under 18. You'll complete it through a secure link from KCE.</div></div></div>
+
+  <div class="callout">
+    <p style="margin:0"><b>Golden rule:</b> KCE business stays on KCE tools. Communication, scheduling, materials, and student data flow through the platforms above — never through personal accounts or apps.</p>
+  </div>
+
+  <div class="kc" data-kc="7" data-correct="b">
+    <div class="q">Knowledge check — Where should a student's graded work and notes be stored?</div>
+    <label class="opt"><input type="radio" name="kc7" value="a">On your personal laptop or personal Google Drive.</label>
+    <label class="opt"><input type="radio" name="kc7" value="b">Only in KCE-approved Drive locations.</label>
+    <label class="opt"><input type="radio" name="kc7" value="c">Wherever is most convenient at the time.</label>
+    <div class="kcfb"></div>
+  </div>
+
+  <div class="nav"><button class="btn ghost prev">← Back</button><button class="btn next" disabled>Continue →</button></div>
+</section>
+
+<!-- ================= STEP 8 · CONTACTS ================= -->
+<section class="card step hidden" data-step="8">
+  <div class="kicker">Module 8</div>
+  <h2>Who to Contact &amp; How to Escalate</h2>
+  <p class="lead">When you need help, here's exactly where to go.</p>
+
+  <div class="contact">
+    <div class="av">JK</div>
+    <div>
+      <b>Jonathan King-Cretot</b> · <span class="role">Co-Founder &amp; CEO</span>
+      <div class="meta">Operations and every academic program — tutoring, English, test prep, homeschool — plus scheduling, pay, technology, and HR. Your first point of contact for almost everything.<br>kce@kingcretot.com · 914-809-0112</div>
+    </div>
+  </div>
+  <div class="contact">
+    <div class="av">FK</div>
+    <div>
+      <b>Fabrice King-Cretot</b> · <span class="role">Founder &amp; Director, French Program</span>
+      <div class="meta">Leads and teaches all French instruction. French instructors' point of contact for program and pedagogy. Also the alternate contact for any concern involving Jonathan.<br>fabrice@kingcretot.com · 786-230-6252</div>
+    </div>
+  </div>
+
+  <div class="callout red">
+    <h4>Escalate immediately (same day) for:</h4>
+    <ul style="margin:0">
+      <li>Any child-safety concern or suspected abuse/neglect</li>
+      <li>Any harassment or discrimination</li>
+      <li>A student in crisis or distress</li>
+      <li>Scholarship, billing, or records irregularities</li>
+      <li>Anything that could affect a student's safety or KCE's standing as an approved provider</li>
+    </ul>
+  </div>
+  <p>For everyday questions — scheduling, materials, a tricky lesson — reach out through KCE email or chat. We'd always rather you ask than guess.</p>
+
+  <div class="kc" data-kc="8" data-correct="c">
+    <div class="q">Knowledge check — You have a serious child-safety concern about a student. You should…</div>
+    <label class="opt"><input type="radio" name="kc8" value="a">Wait until your next scheduled check-in to mention it.</label>
+    <label class="opt"><input type="radio" name="kc8" value="b">Handle it yourself and not involve KCE.</label>
+    <label class="opt"><input type="radio" name="kc8" value="c">Act on mandatory-reporting duties and notify KCE leadership the same day.</label>
+    <div class="kcfb"></div>
+  </div>
+
+  <div class="nav"><button class="btn ghost prev">← Back</button><button class="btn next" disabled>Continue →</button></div>
+</section>
+
+<!-- ================= STEP 9 · ACKNOWLEDGMENTS ================= -->
+<section class="card step hidden" data-step="9">
+  <div class="kicker">Module 9</div>
+  <h2>Policy Acknowledgments</h2>
+  <p class="lead">Read each policy and enter your initials to acknowledge. Your initials are recorded with a timestamp in your completion record.</p>
+
+  <div class="ack" data-ack="harassment">
+    <h3>1 · Anti-Harassment &amp; Anti-Discrimination</h3>
+    <div class="body">I have read and understand KCE's zero-tolerance anti-harassment and anti-discrimination policy. I will treat all students, families, and colleagues with respect, will not engage in harassment or discrimination of any kind, and understand that any sexualized conduct involving a minor is strictly prohibited. I know how to report concerns and that KCE prohibits retaliation against good-faith reports.</div>
+    <div class="initrow"><label>Your initials:</label><input type="text" maxlength="4" data-init="harassment" placeholder="ABC"><span class="initdone" data-done="harassment">Recorded ✓</span></div>
+  </div>
+
+  <div class="ack" data-ack="childsafety">
+    <h3>2 · Child Safety &amp; Mandatory Reporting</h3>
+    <div class="body">I understand I must clear a Checkr background check before working with students under 18. I will keep all student contact within KCE-approved channels, maintain transparency with parents/guardians, avoid private or isolated contact, and uphold professional boundaries at all times. I understand my duty to report suspected abuse or neglect to the Florida Abuse Hotline (1-800-962-2873) and to KCE leadership immediately.</div>
+    <div class="initrow"><label>Your initials:</label><input type="text" maxlength="4" data-init="childsafety" placeholder="ABC"><span class="initdone" data-done="childsafety">Recorded ✓</span></div>
+  </div>
+
+  <div class="ack" data-ack="confidential">
+    <h3>3 · Confidentiality &amp; Student Privacy</h3>
+    <div class="body">I will keep all student and family information confidential, use it solely to deliver KCE instruction, store it only in KCE-approved tools, and never disclose it outside KCE. I will handle student records consistent with student-privacy principles (FERPA). This obligation continues after my engagement with KCE ends.</div>
+    <div class="initrow"><label>Your initials:</label><input type="text" maxlength="4" data-init="confidential" placeholder="ABC"><span class="initdone" data-done="confidential">Recorded ✓</span></div>
+  </div>
+
+  <div class="ack" data-ack="tech">
+    <h3>4 · Technology &amp; Acceptable Use</h3>
+    <div class="body">I will conduct KCE business only on KCE-approved platforms (KCE email, Google Workspace/Drive, Google Chat, Calendly, Zoom, Checkr). I will use accurate scheduling, follow the recording and consent policy, protect account credentials, and not move student data or KCE business to personal accounts or apps.</div>
+    <div class="initrow"><label>Your initials:</label><input type="text" maxlength="4" data-init="tech" placeholder="ABC"><span class="initdone" data-done="tech">Recorded ✓</span></div>
+  </div>
+
+  <div class="ack" data-ack="nonsolicit">
+    <h3>5 · Non-Solicitation &amp; No Off-Platform Circumvention</h3>
+    <div class="body">KCE students and families are KCE's relationships. I agree that I will not solicit, divert, or accept KCE students or families for private lessons or any competing arrangement outside KCE, and will not move a KCE family off KCE's platforms to avoid KCE's fees or oversight — during my engagement and for 12 months after it ends. All bookings, billing, and communication stay within KCE's approved channels. I understand the specific terms are governed by my signed agreement with KCE.</div>
+    <div class="initrow"><label>Your initials:</label><input type="text" maxlength="4" data-init="nonsolicit" placeholder="ABC"><span class="initdone" data-done="nonsolicit">Recorded ✓</span></div>
+  </div>
+
+  <!-- Role-aware employment acknowledgment -->
+  <div class="ack" data-ack="emp1099" id="ack-1099">
+    <h3>6 · Independent Contractor (1099) Acknowledgment</h3>
+    <div class="body">I understand and agree that I am engaged by KingCretot Experience, LLC as an <b>independent contractor (1099)</b>, not an employee. I am responsible for my own federal and state taxes (no withholding by KCE), provide my own equipment, control the manner and means of how I perform my services within KCE's standards, and am not eligible for employee benefits, unemployment, or workers' compensation through KCE. My engagement is governed by my written Independent Contractor Agreement with KCE and may be ended by either party in accordance with that agreement. This training does not create an employment relationship.</div>
+    <div class="initrow"><label>Your initials:</label><input type="text" maxlength="4" data-init="emp1099" placeholder="ABC"><span class="initdone" data-done="emp1099">Recorded ✓</span></div>
+  </div>
+  <div class="ack hidden" data-ack="empw2" id="ack-w2">
+    <h3>6 · At-Will Employment Acknowledgment</h3>
+    <div class="body">I understand that my employment with KingCretot Experience, LLC is <b>at will</b>, meaning that either I or KCE may end the employment relationship at any time, with or without cause or notice, to the extent permitted by law. I understand that no statement in this training or any KCE material creates a contract of continued employment, and that the at-will relationship may only be modified in a signed writing by an authorized KCE officer.</div>
+    <div class="initrow"><label>Your initials:</label><input type="text" maxlength="4" data-init="empw2" placeholder="ABC"><span class="initdone" data-done="empw2">Recorded ✓</span></div>
+  </div>
+
+  <div class="callout"><p style="margin:0">These acknowledgments are summaries for training. They do not replace your signed agreements with KCE, which govern in full.</p></div>
+
+  <div class="nav"><button class="btn ghost prev">← Back</button><button class="btn next" disabled>Continue to signature →</button></div>
+</section>
+
+<!-- ================= STEP 10 · SIGN & SUBMIT ================= -->
+<section class="card step hidden" data-step="10">
+  <div class="kicker">Final Step</div>
+  <h2>Certify &amp; Submit</h2>
+  <p class="lead">Review, sign, and submit. Your record is filed with KCE and a copy is available for you to download.</p>
+
+  <h3 style="font-size:17px">Your completion summary</h3>
+  <ul class="reviewlist" id="reviewlist"></ul>
+
+  <hr class="soft">
+
+  <div class="checkline"><input type="checkbox" id="cert_check"><label for="cert_check">I certify that I have personally read, understood, and completed this training; that my knowledge-check answers and initials are my own; and that I agree to uphold every KCE policy and standard covered here. <b>I understand that typing my name below constitutes my electronic signature.</b></label></div>
+
+  <label class="fl">Type your full legal name as your electronic signature <span class="req">*</span></label>
+  <input type="text" id="signature" placeholder="Your full legal name" style="font-family:'Playfair Display',serif;font-size:20px;font-style:italic;color:var(--navy)">
+
+  <label class="fl">Date <span class="req">*</span></label>
+  <input type="date" id="signdate">
+
+  <div class="callout red hidden" id="submit_err"><p style="margin:0" id="submit_err_txt"></p></div>
+
+  <div class="nav"><button class="btn ghost prev">← Back</button><button class="btn gold" id="submitbtn" disabled>Submit my training ✓</button></div>
+  <p class="hint" style="margin-top:14px">By submitting, your completion record is sent to KingCretot Experience and filed in your personnel record.</p>
+</section>
+
+<!-- ================= STEP 11 · DONE ================= -->
+<section class="card step hidden" data-step="11">
+  <div class="done-ic">★</div>
+  <h2 style="text-align:center;border:none">Training complete — welcome aboard.</h2>
+  <p style="text-align:center" id="done_sub">Thank you for completing your KCE onboarding. Your signed record has been sent to KingCretot Experience.</p>
+
+  <div class="cert" id="certbox"></div>
+
+  <div style="text-align:center;margin-top:20px">
+    <button class="btn" id="downloadbtn">Download my completion certificate</button>
+  </div>
+  <p class="hint" id="resubmit_note" style="text-align:center;margin-top:16px"></p>
+  <p style="text-align:center;margin-top:8px">
+    <a href="#" id="restartlink" style="font-size:12.5px;color:var(--muted)">Start over / clear my saved progress</a>
+  </p>
+</section>
+
+</div>
+
+<div class="foot">
+  <div class="triband"></div>
+  <b>KingCretot Experience, LLC</b> · PO Box 2322, Arcadia, FL 34265 · kce@kingcretot.com<br>
+  Confidential onboarding &amp; compliance training. © <span id="yr"></span> KingCretot Experience, LLC. All rights reserved.
+</div>
+
+<script>
+/* ============================================================
+   CONFIG — paste your NEW Formspree form ID here (create a form
+   named "KCE Instructor Training" and set recipient kce@kingcretot.com)
+   ============================================================ */
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/xjgqbnwp";
+
+const STORAGE_KEY = "kce_training_v1";
+const TOTAL_STEPS = 12;            // 0..11
+const REQUIRED_KC = [1,2,3,4,5,6,7,8];
+const REQUIRED_ACKS_BASE = ["harassment","childsafety","confidential","tech","nonsolicit"];
+
+let state = load();
+function load(){ try{return JSON.parse(localStorage.getItem(STORAGE_KEY))||{}}catch(e){return {}} }
+function save(){ try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state)); flashSaved();}catch(e){} }
+state.kc = state.kc||{}; state.init = state.init||{}; state.trainee = state.trainee||{};
+state.step = state.step||0;
+
+const $ = s=>document.querySelector(s);
+const $$ = s=>Array.from(document.querySelectorAll(s));
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+let saveTimer;
+function flashSaved(){ const t=$('#savetag'); t.classList.add('show'); clearTimeout(saveTimer); saveTimer=setTimeout(()=>t.classList.remove('show'),900); }
+
+/* ---------- restore fields ---------- */
+function restore(){
+  if(state.trainee.name) $('#t_name').value=state.trainee.name;
+  if(state.trainee.email) $('#t_email').value=state.trainee.email;
+  if(state.trainee.role) $('#t_role').value=state.trainee.role;
+  if(state.trainee.program) $('#t_program').value=state.trainee.program;
+  // knowledge checks
+  Object.keys(state.kc).forEach(k=>{
+    const r=document.querySelector('input[name="kc'+k+'"][value="'+state.kc[k]+'"]');
+    if(r){ r.checked=true; gradeKC(document.querySelector('.kc[data-kc="'+k+'"]')); }
+  });
+  // initials
+  $$('[data-init]').forEach(inp=>{ const key=inp.getAttribute('data-init'); if(initVal(key)){ inp.value=initVal(key); markInit(key,true);} });
+  applyRole();
+  if(state.signature) $('#signature').value=state.signature;
+  if(state.signdate) $('#signdate').value=state.signdate;
+}
+
+/* ---------- trainee fields ---------- */
+['t_name','t_email','t_role','t_program'].forEach(id=>{
+  document.getElementById(id).addEventListener('input',e=>{
+    const map={t_name:'name',t_email:'email',t_role:'role',t_program:'program'};
+    state.trainee[map[id]]=e.target.value; save(); applyRole(); validateStart();
+  });
+});
+function validateStart(){
+  const ok = $('#t_name').value.trim() && /\S+@\S+\.\S+/.test($('#t_email').value) && $('#t_role').value;
+  $('#start').disabled=!ok;
+}
+function applyRole(){
+  const r=state.trainee.role;
+  if(r==='w2'){ $('#ack-1099').classList.add('hidden'); $('#ack-w2').classList.remove('hidden'); }
+  else { $('#ack-1099').classList.remove('hidden'); $('#ack-w2').classList.add('hidden'); }
+}
+function empAckKey(){ return state.trainee.role==='w2' ? 'empw2' : 'emp1099'; }
+function requiredAcks(){ return REQUIRED_ACKS_BASE.concat([empAckKey()]); }
+
+/* ---------- knowledge checks ---------- */
+$$('.kc').forEach(kc=>{
+  const id=kc.getAttribute('data-kc');
+  kc.querySelectorAll('input[type=radio]').forEach(r=>{
+    r.addEventListener('change',()=>{ state.kc[id]=r.value; save(); gradeKC(kc); refreshNav(); });
+  });
+});
+function gradeKC(kc){
+  const id=kc.getAttribute('data-kc'); const correct=kc.getAttribute('data-correct');
+  const chosen=state.kc[id]; const fb=kc.querySelector('.kcfb');
+  kc.querySelectorAll('.opt').forEach(o=>o.classList.remove('correct','wrong'));
+  if(!chosen) return false;
+  const chosenOpt=kc.querySelector('input[value="'+chosen+'"]').closest('.opt');
+  if(chosen===correct){ chosenOpt.classList.add('correct'); fb.textContent='Correct.'; fb.className='kcfb show good'; return true; }
+  else { chosenOpt.classList.add('wrong'); fb.textContent='Not quite — review the section above and choose again.'; fb.className='kcfb show bad'; return false; }
+}
+function kcCorrect(id){ const kc=document.querySelector('.kc[data-kc="'+id+'"]'); return state.kc[id]===kc.getAttribute('data-correct'); }
+
+/* ---------- initials ---------- */
+$$('[data-init]').forEach(inp=>{
+  inp.addEventListener('input',()=>{
+    const key=inp.getAttribute('data-init'); const v=inp.value.trim().toUpperCase();
+    inp.value=v;
+    if(v.length>=2){ state.init[key]={val:v,ts:new Date().toISOString()}; markInit(key,true); }
+    else { delete state.init[key]; markInit(key,false); }
+    save(); refreshNav();
+  });
+});
+function markInit(key,done){ const d=document.querySelector('[data-done="'+key+'"]'); if(d) d.classList.toggle('show',done); }
+
+/* normalize older init storage (string) into object on load */
+Object.keys(state.init).forEach(k=>{ if(typeof state.init[k]==='string'){ state.init[k]={val:state.init[k],ts:''}; } });
+function initVal(k){ return state.init[k] ? (state.init[k].val||'') : ''; }
+
+/* ---------- signature ---------- */
+$('#signature').addEventListener('input',e=>{ state.signature=e.target.value; save(); validateSubmit(); });
+$('#signdate').addEventListener('input',e=>{ state.signdate=e.target.value; save(); validateSubmit(); });
+$('#cert_check').addEventListener('change',validateSubmit);
+
+/* ---------- navigation ---------- */
+function showStep(n){
+  state.step=n; save();
+  $$('.step').forEach(s=>s.classList.add('hidden'));
+  const el=document.querySelector('.step[data-step="'+n+'"]'); if(el) el.classList.remove('hidden');
+  const pct=Math.round((n/(TOTAL_STEPS-1))*100);
+  $('#pfill').style.width=pct+'%';
+  $('#pmeta').textContent='Step '+(n+1)+' of '+TOTAL_STEPS;
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(n===10) buildReview();
+  refreshNav();
+}
+function stepRequirementMet(n){
+  if(n===0) return !!(state.trainee.name && /\S+@\S+\.\S+/.test(state.trainee.email||'') && state.trainee.role);
+  if(n>=1 && n<=8) return kcCorrect(n);
+  if(n===9) return requiredAcks().every(k=>initVal(k).length>=2);
+  return true;
+}
+function refreshNav(){
+  const n=state.step;
+  const nextBtn=document.querySelector('.step[data-step="'+n+'"] .next');
+  if(nextBtn) nextBtn.disabled=!stepRequirementMet(n);
+  if(n===10) validateSubmit();
+}
+$$('.next').forEach(b=>b.addEventListener('click',()=>{ if(stepRequirementMet(state.step)) showStep(state.step+1); }));
+$$('.prev').forEach(b=>b.addEventListener('click',()=>showStep(state.step-1)));
+$('#start').addEventListener('click',()=>{ if(stepRequirementMet(0)) showStep(1); });
+
+/* ---------- review + submit ---------- */
+function buildReview(){
+  const ul=$('#reviewlist'); ul.innerHTML='';
+  const rows=[
+    ['Name', state.trainee.name||'—'],
+    ['Email', state.trainee.email||'—'],
+    ['Engagement type', state.trainee.role==='w2'?'Employee (W-2)':'Independent Contractor (1099)'],
+    ['Knowledge checks', REQUIRED_KC.every(kcCorrect)?'All passed ✓':'Incomplete'],
+    ['Policy acknowledgments', requiredAcks().every(k=>initVal(k).length>=2)?'All initialed ✓':'Incomplete']
+  ];
+  rows.forEach(r=>{ const li=document.createElement('li'); li.innerHTML='<b>'+r[0]+':</b> '+r[1]; ul.appendChild(li); });
+}
+function validateSubmit(){
+  const ok = stepRequirementMet(0) && REQUIRED_KC.every(kcCorrect) &&
+             requiredAcks().every(k=>initVal(k).length>=2) &&
+             $('#cert_check').checked && $('#signature').value.trim().length>=2 && $('#signdate').value;
+  $('#submitbtn').disabled=!ok;
+  return ok;
+}
+function etStamp(d){ try{ return d.toLocaleString('en-US',{timeZone:'America/New_York',dateStyle:'medium',timeStyle:'short'})+' ET'; }catch(e){ return d.toISOString(); } }
+
+function buildPayload(){
+  const now=new Date();
+  const compId='KCE-'+now.getFullYear()+(''+(now.getMonth()+1)).padStart(2,'0')+(''+now.getDate()).padStart(2,'0')+'-'+Math.random().toString(36).slice(2,7).toUpperCase();
+  const labels={1:'Mission/KCE Way',2:'Pedagogy',3:'Conduct/Scholarship',4:'Child Safety',5:'Anti-Harassment',6:'Etiquette',7:'Tools',8:'Escalation'};
+  const p={
+    _subject:'KCE Instructor Training Completed — '+(state.trainee.name||'Unknown'),
+    completion_id:compId,
+    name:state.trainee.name||'',
+    email:state.trainee.email||'',
+    engagement_type: state.trainee.role==='w2'?'Employee (W-2)':'Independent Contractor (1099)',
+    program: state.trainee.program||'',
+    completed_at_ET: etStamp(now),
+    completed_at_ISO: now.toISOString(),
+    electronic_signature: state.signature||'',
+    signature_date: state.signdate||'',
+    certified: $('#cert_check').checked ? 'Yes' : 'No'
+  };
+  REQUIRED_KC.forEach(i=>{ p['knowledge_'+i+'_'+labels[i].replace(/\W+/g,'')] = (kcCorrect(i)?'PASS':'review')+' (ans '+(state.kc[i]||'-')+')'; });
+  requiredAcks().forEach(k=>{ const o=state.init[k]||{}; p['initial_'+k] = (o.val||'')+(o.ts?(' @ '+etStamp(new Date(o.ts))):''); });
+  return p;
+}
+
+let lastPayload=null;
+$('#submitbtn').addEventListener('click',async ()=>{
+  if(!validateSubmit()) return;
+  const btn=$('#submitbtn'); btn.disabled=true; btn.textContent='Submitting…';
+  $('#submit_err').classList.add('hidden');
+  const payload=buildPayload(); lastPayload=payload;
+
+  // Not yet wired up (pre-deploy / testing only) — show a clear PREVIEW, do NOT record as official.
+  if(FORMSPREE_ENDPOINT.includes('REPLACE_WITH')){
+    state.completion=payload; state.official=false; save();
+    finish('preview'); return;
+  }
+
+  // Live: completion is OFFICIAL only when KCE's server confirms receipt.
+  try{
+    const res=await fetch(FORMSPREE_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(payload)});
+    if(res.ok){
+      state.completed=true; state.official=true; state.completion=payload; save();
+      finish('ok');
+    } else {
+      throw new Error('server '+res.status);
+    }
+  }catch(e){
+    // Do NOT mark complete — keep them here to retry.
+    btn.disabled=false; btn.textContent='Submit my training ✓';
+    $('#submit_err_txt').textContent='Your training was not received by KCE yet — so it is not marked complete. Check your connection and press Submit again. If it keeps failing, contact kce@kingcretot.com.';
+    $('#submit_err').classList.remove('hidden');
+  }
+});
+
+function finish(mode){
+  showStep(11);
+  const box=$('#certbox'); const p=lastPayload||state.completion||buildPayload();
+  box.innerHTML='';
+  const rows=[
+    ['Completion ID',p.completion_id],['Name',p.name],['Email',p.email],
+    ['Engagement type',p.engagement_type],['Program',p.program||'—'],
+    ['Signed',p.electronic_signature+' · '+(p.signature_date||'')],
+    ['Completed',p.completed_at_ET],
+    ['Knowledge checks','All 8 passed ✓'],['Acknowledgments','All initialed ✓']
+  ];
+  rows.forEach(r=>{ const d=document.createElement('div'); d.className='row'; d.innerHTML='<span>'+r[0]+'</span><span>'+r[1]+'</span>'; box.appendChild(d); });
+  if(mode==='ok'){
+    $('#done_sub').innerHTML='Thank you, '+(p.name||'')+'. Your full signed completion record (your transcript) has been received by KingCretot Experience and filed in your personnel record. Download your certificate below for your own records.';
+    $('#resubmit_note').textContent='Reference your Completion ID ('+p.completion_id+') in any questions. You will complete this training again if you are re-engaged after a break.';
+  } else { // preview
+    $('#done_sub').innerHTML='<b style="color:var(--warn)">Preview only — not yet recorded.</b> The submission form isn\u2019t connected yet, so this run was <b>not</b> sent to KCE. Once the form is wired up, finishing here files the record with KCE automatically.';
+    $('#resubmit_note').textContent='Setup note for KCE: paste the Formspree form ID into FORMSPREE_ENDPOINT, then completions record automatically.';
+  }
+}
+
+$('#downloadbtn').addEventListener('click',()=>{
+  const p=state.completion||buildPayload();
+  const official = state.official!==false;
+  const watermark = official ? '' : '<div style="color:#DB2F30;font-weight:bold;letter-spacing:2px;font-size:12px;margin-top:6px">PREVIEW — NOT AN OFFICIAL RECORD</div>';
+  const html='<!doctype html><html><head><meta charset="utf-8"><title>KCE Certificate of Completion — '+p.name+'</title>'+
+    '<style>@page{margin:0}body{font-family:Georgia,\'Times New Roman\',serif;margin:0;background:#FAF7EF;color:#17243B}'+
+    '.sheet{max-width:720px;margin:24px auto;background:#fff;border:2px solid #C9A84C;padding:0 0 26px}'+
+    '.top{background:#0A1F3D;color:#fff;text-align:center;padding:22px 20px;border-bottom:3px solid #C9A84C}'+
+    '.mono{display:inline-block;width:46px;height:46px;border:2px solid #C9A84C;border-radius:4px;line-height:44px;color:#C9A84C;font-weight:bold;font-size:18px;letter-spacing:1px}'+
+    '.wm{color:#C9A84C;font-size:20px;letter-spacing:.5px;margin-top:8px;font-weight:bold}'+
+    '.tag{font-size:10px;letter-spacing:3px;text-transform:uppercase;margin-top:4px;color:#cdd6e6}'+
+    '.body{padding:30px 44px 6px;text-align:center}'+
+    '.k{color:#C9A84C;letter-spacing:3px;text-transform:uppercase;font-size:11px;margin-bottom:6px}'+
+    'h1{font-size:30px;color:#0A1F3D;margin:0 0 14px}'+
+    '.name{font-size:30px;color:#0A1F3D;border-bottom:1px solid #C9A84C;display:inline-block;padding:0 22px 6px;margin:8px 0 14px}'+
+    'p{font-size:15px;line-height:1.6;margin:.5em 0}'+
+    '.meta{display:flex;flex-wrap:wrap;gap:8px 0;margin:22px 44px 0;border-top:1px solid #e7e0cf;padding-top:16px}'+
+    '.meta div{flex:0 0 50%;text-align:left;font-size:13px;padding:5px 0}'+
+    '.meta b{color:#0A1F3D} .meta span{color:#5b6678}'+
+    '.sig{display:flex;justify-content:space-between;margin:26px 44px 0;gap:24px}'+
+    '.sig div{flex:1;border-top:1px solid #0A1F3D;padding-top:6px;font-size:13px;color:#5b6678}'+
+    '.sig b{display:block;color:#0A1F3D;font-size:15px;font-family:Georgia,serif;font-style:italic;margin-bottom:8px}'+
+    '.band{height:5px;background:linear-gradient(90deg,#0047BA 0 33%,#C9A84C 33% 66%,#DB2F30 66% 100%);margin:24px 44px 0}'+
+    '.foot{text-align:center;font-size:11px;color:#888;margin:12px 44px 0}'+
+    '</style></head><body><div class="sheet">'+
+    '<div class="top"><div class="mono">KC</div><div class="wm">KingCretot Experience</div>'+
+    '<div class="tag">Educate · Empower · Excel</div></div>'+
+    '<div class="body"><div class="k">Certificate of Completion</div>'+
+    '<h1>Instructor Onboarding &amp; Compliance Training</h1>'+
+    '<p>This certifies that</p><div class="name">'+p.name+'</div>'+
+    '<p>has successfully completed the KingCretot Experience Instructor Onboarding &amp; Compliance Training, including all knowledge checks and signed policy acknowledgments.</p>'+
+    watermark+'</div>'+
+    '<div class="meta">'+
+      '<div><b>Completion ID</b><br><span>'+p.completion_id+'</span></div>'+
+      '<div><b>Date completed</b><br><span>'+p.completed_at_ET+'</span></div>'+
+      '<div><b>Engagement type</b><br><span>'+p.engagement_type+'</span></div>'+
+      '<div><b>Program</b><br><span>'+(p.program||'—')+'</span></div>'+
+    '</div>'+
+    '<div class="sig">'+
+      '<div><b>'+p.electronic_signature+'</b>Instructor electronic signature · '+(p.signature_date||'')+'</div>'+
+      '<div><b>KingCretot Experience</b>On file · kce@kingcretot.com</div>'+
+    '</div>'+
+    '<div class="band"></div>'+
+    '<div class="foot">KingCretot Experience, LLC · PO Box 2322, Arcadia, FL 34265 · Confidential. Open this file and print to PDF to save a copy.</div>'+
+    '</div></body></html>';
+  const blob=new Blob([html],{type:'text/html'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download='KCE_Certificate_'+(p.name||'instructor').replace(/\s+/g,'_')+'.html'; a.click();
+});
+
+/* ---------- restart / clear progress ---------- */
+var _rl=document.getElementById('restartlink');
+if(_rl){ _rl.addEventListener('click',function(e){
+  e.preventDefault();
+  if(confirm('Clear your saved progress and start this training over from the beginning? Your downloaded certificate (if any) is not affected, and a record already received by KCE stays on file.')){
+    try{ localStorage.removeItem(STORAGE_KEY); }catch(err){}
+    location.reload();
+  }
+}); }
+
+/* ---------- init ---------- */
+restore(); validateStart(); validateSubmit();
+showStep(state.completed ? 11 : (state.step||0));
+if(state.completed) finish('ok');
+</script>
+</body>
+</html>
